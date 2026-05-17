@@ -131,7 +131,7 @@ docker-compose up --build
 
 ## 🔗 Repository Link
 
-[https://github.com/YOUR-USERNAME/StreamingApp](https://github.com/YOUR-USERNAME/StreamingApp)
+[https://github.com/](https://github.com/ShreeDevSecOpsHub/StreamingApp/)
 
 ---
 
@@ -141,14 +141,6 @@ docker-compose up --build
 
 ```
 
-### How to Use This:
-
-1. Go to your GitHub repository
-2. Click on **Add a README** or edit existing `README.md`
-3. Paste the entire content above
-4. Replace `YOUR-USERNAME` with your actual GitHub username
-5. Add your architecture diagram in the `docs/` folder and update the path
-6. Commit the file
 
 Would you like me to also create separate files like:
 - `docs/DEPLOYMENT.md`
