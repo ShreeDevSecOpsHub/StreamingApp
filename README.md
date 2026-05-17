@@ -1,8 +1,4 @@
-**Here is the complete, clean, and professional `README.md` content** ready for your GitHub repository.
 
----
-
-```markdown
 # StreamingApp - MERN Stack with Docker, Jenkins CI/CD & Kubernetes (EKS)
 
 A complete **DevOps project** demonstrating containerization, CI/CD pipeline, orchestration, scaling, and monitoring of a MERN-based Streaming Application.
