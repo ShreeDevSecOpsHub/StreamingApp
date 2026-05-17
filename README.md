@@ -1,138 +1,162 @@
-# StreamingApp
+**Here is the complete, clean, and professional `README.md` content** ready for your GitHub repository.
 
-Stream premium video content, host live watch parties, and manage your catalogue with a modern microservice architecture. The platform now ships with a production-ready admin portal, real-time chat, S3-backed adaptive streaming, and a redesigned cinematic frontend experience.
+---
 
-## Architecture
+```markdown
+# StreamingApp - MERN Stack with Docker, Jenkins CI/CD & Kubernetes (EKS)
 
-| Service | Port | Description |
-| --- | --- | --- |
-| `authService` | 3001 | User authentication, registration, JWT issuance |
-| `streamingService` | 3002 | Video catalogue, S3 playback endpoints, public APIs |
-| `adminService` | 3003 | Dedicated admin microservice for asset management and uploads |
-| `chatService` | 3004 | Websocket + REST chat for live watch parties |
-| `frontend` | 3000 | React SPA with revamped UI and integrated chat |
-| `mongo` | 27017 | Shared MongoDB instance |
+A complete **DevOps project** demonstrating containerization, CI/CD pipeline, orchestration, scaling, and monitoring of a MERN-based Streaming Application.
 
-All backend services share common database models and utilities through `backend/common`.
+---
 
-## Environment Configuration
+## 📋 Project Overview
 
-Create an `.env` for each service (or export variables before running). All services accept the standard AWS credentials for S3 access.
+This project involves containerizing a multi-service MERN Streaming Application, setting up a complete CI/CD pipeline using **Jenkins**, deploying it on **Amazon EKS** using **Helm**, and implementing monitoring & logging with AWS services.
 
-### Auth Service (`backend/authService/.env`)
-```ini
-PORT=3001
-MONGO_URI=mongodb://localhost:27017/streamingapp
-JWT_SECRET=changeme
-CLIENT_URLS=http://localhost:3000
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_REGION=us-east-1
-AWS_S3_BUCKET=
+---
+
+## 🛠 Tech Stack
+
+- **Frontend**: React.js
+- **Backend**: Node.js + Express (Microservices)
+- **Database**: MongoDB
+- **Containerization**: Docker
+- **CI/CD**: Jenkins
+- **Container Registry**: Amazon ECR
+- **Orchestration**: Kubernetes (Amazon EKS)
+- **Package Manager**: Helm
+- **Monitoring**: Amazon CloudWatch + Container Insights
+- **Infrastructure**: AWS
+
+---
+
+## 📁 Project Structure
+
+```
+StreamingApp/
+├── backend/
+│   ├── authService/
+│   ├── streamingService/
+│   ├── adminService/
+│   └── chatService/
+├── frontend/
+├── k8s/                    # Kubernetes manifests (optional)
+├── helm-chart/             # Helm charts
+├── Jenkinsfile
+├── docker-compose.yml
+├── Dockerfile (per service)
+└── docs/
 ```
 
-### Streaming Service (`backend/streamingService/.env`)
-```ini
-PORT=3002
-MONGO_URI=mongodb://localhost:27017/streamingapp
-JWT_SECRET=changeme
-CLIENT_URLS=http://localhost:3000
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_REGION=us-east-1
-AWS_S3_BUCKET=
-AWS_CDN_URL=
-STREAMING_PUBLIC_URL=http://localhost:3002
-```
+---
 
-### Admin Service (`backend/adminService/.env`)
-```ini
-PORT=3003
-MONGO_URI=mongodb://localhost:27017/streamingapp
-JWT_SECRET=changeme
-CLIENT_URLS=http://localhost:3000
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_REGION=us-east-1
-AWS_S3_BUCKET=
-```
+## 🚀 Setup and Deployment Steps
 
-### Chat Service (`backend/chatService/.env`)
-```ini
-PORT=3004
-MONGO_URI=mongodb://localhost:27017/streamingapp
-JWT_SECRET=changeme
-CLIENT_URLS=http://localhost:3000
-```
+### 1. Version Control & Fork
+- Forked from: [https://github.com/UnpredictablePrashant/StreamingApp.git](https://github.com/UnpredictablePrashant/StreamingApp.git)
+- Synced with upstream regularly.
 
-### Frontend build variables (`frontend/.env` or Docker build args)
-```ini
-REACT_APP_AUTH_API_URL=http://localhost:3001/api
-REACT_APP_STREAMING_API_URL=http://localhost:3002/api
-REACT_APP_STREAMING_PUBLIC_URL=http://localhost:3002
-REACT_APP_ADMIN_API_URL=http://localhost:3003/api
-REACT_APP_CHAT_API_URL=http://localhost:3004/api
-REACT_APP_CHAT_SOCKET_URL=http://localhost:3004
-```
+### 2. Containerization
 
-## Running with Docker Compose
+**Dockerfiles** created for:
+- Frontend (Multi-stage build with Nginx)
+- Each Backend Service (auth, streaming, admin, chat)
 
-1. Populate the environment variables above (or rely on the defaults baked into `docker-compose.yml`).
-2. Build and start the stack:
-   ```bash
-   docker-compose up --build
-   ```
-3. Navigate to `http://localhost:3000` for the web app.
+**Pushed images to Amazon ECR**
 
-The compose file provisions MongoDB plus all four Node.js microservices. S3 credentials are optional for local testing—you can still browse seeded metadata, but streaming requires valid S3 objects.
+### 3. Continuous Integration (CI)
 
-## Local Development
+- Jenkins installed on AWS EC2
+- Jenkins Pipeline (`Jenkinsfile`) automatically:
+  - Builds Docker images
+  - Pushes to Amazon ECR
+  - Triggered on every push to GitHub
 
-Install dependencies for each service:
+### 4. Kubernetes Deployment (Amazon EKS)
+
+- EKS Cluster created using `eksctl`
+- Deployed using **Helm charts**
+- Horizontal Pod Autoscaler (HPA) configured for scaling
+- AWS Load Balancer Controller for Ingress
+
+### 5. Monitoring & Logging
+
+- Amazon CloudWatch Container Insights
+- CloudWatch Logs for centralized logging
+- Alarms configured for critical metrics
+
+### 6. Bonus: ChatOps Integration
+
+- SNS Topics created for deployment notifications
+- Integrated with Slack / Teams / Telegram for real-time alerts
+
+---
+
+## 📊 Architecture Diagram
+
+*(Add your architecture diagram here - PNG/SVG)*
+
+![System Architecture](./docs/architecture-diagram.png)
+
+---
+
+## 🧪 How to Run Locally
 
 ```bash
-# auth service
-cd backend/authService && npm install
-
-# streaming service
-cd ../streamingService && npm install
-
-# admin service
-cd ../adminService && npm install
-
-# chat service
-cd ../chatService && npm install
-
-# frontend
-cd ../../frontend && npm install
+docker-compose up --build
 ```
 
-Run the services (in separate terminals) after starting MongoDB:
+---
 
-```bash
-cd backend/authService && npm run dev
-cd backend/streamingService && npm run dev
-cd backend/adminService && npm run dev
-cd backend/chatService && npm run dev
-cd frontend && npm start
+## 📝 Documentation
+
+- [Deployment Guide](./docs/DEPLOYMENT.md)
+- [Jenkins Pipeline](./Jenkinsfile)
+- [Helm Charts](./helm-chart/)
+- [Infrastructure Setup](./docs/AWS_SETUP.md)
+
+---
+
+## ✅ Final Validation
+
+- Frontend and Backend services are accessible via Load Balancer
+- Auto-scaling is working
+- CI/CD pipeline is fully functional
+- Logging and monitoring are active
+
+---
+
+## 📬 Contact
+
+**Name**: Shreeram Parab  
+**Location**: Pune, Maharashtra
+
+---
+
+## 🔗 Repository Link
+
+[https://github.com/YOUR-USERNAME/StreamingApp](https://github.com/YOUR-USERNAME/StreamingApp)
+
+---
+
+**Project completed as part of HeroVired Graded Assignment on Orchestration and Scaling.**
+
+---
+
 ```
 
-## Feature Highlights
+### How to Use This:
 
-- **S3-backed adaptive streaming** with secure signed uploads for admins.
-- **Dedicated admin microservice** for video ingestion, metadata management, and featured curation.
-- **Real-time chat** overlay in the player (Socket.IO + persistent message history).
-- **Modern React experience** featuring cinematic hero sections, dynamic carousels, and responsive design.
-- **Role-aware access control** across frontend routes and backend microservices.
+1. Go to your GitHub repository
+2. Click on **Add a README** or edit existing `README.md`
+3. Paste the entire content above
+4. Replace `YOUR-USERNAME` with your actual GitHub username
+5. Add your architecture diagram in the `docs/` folder and update the path
+6. Commit the file
 
-## Testing
+Would you like me to also create separate files like:
+- `docs/DEPLOYMENT.md`
+- `docs/AWS_SETUP.md`
+- A detailed Helm values example
 
-Automated tests are not yet included. Recommended smoke checks:
-
-1. Register and log in through the web UI.
-2. Upload a small video + thumbnail via the admin dashboard (requires valid S3 credentials).
-3. Confirm playback from the browse page and verify that chat messages broadcast between multiple browser tabs.
-
-## License
-
-MIT © StreamFlix Team
+Just say the word and I’ll generate them for you.
